@@ -70,7 +70,6 @@ public class Player1 extends Player {
 		}else{
 			step_size = 1;
 		}
-		//add moves to queue.)
 	}
 
 	private Move getNextMoveInDirection(Move lastHitMove2, int persuitDirection2){
@@ -84,8 +83,18 @@ public class Player1 extends Player {
 
 	private void reverser_persuitDirection() {
 		reverseCount++;
-		// TODO Auto-generated method stub
-		
+		if(this.persuitDirection == DIRECTION_NORTH){
+			this.persuitDirection = DIRECTION_SOUTH;
+		}
+		else if(this.persuitDirection == DIRECTION_EAST){
+			this.persuitDirection = DIRECTION_WEST;
+		}
+		else if(this.persuitDirection == DIRECTION_SOUTH){
+			this.persuitDirection = DIRECTION_NORTH;
+		}
+		else if(this.persuitDirection == DIRECTION_WEST){
+			this.persuitDirection = DIRECTION_EAST;
+		}
 	}
 
 	private int getPersuitDirection(Move originalHit2, Move lastHitMove2) {
@@ -102,13 +111,22 @@ public class Player1 extends Player {
 		return direction;
 	}
 
-	private Move getNextClockwiseMove(Move lastMove2, Move lastMove3) {
-//
-//		if(nextMove.col > 0)
-//			lastMove.col--;
-//		else if(nextMove.col<10)
-//		else if(nextMove.col<10)
-//			
+	private Move getNextClockwiseMove(Move lastHitMove, Move lastMissMove) {
+		if(lastHitMove.row - lastMissMove.row == 0){
+			//same row
+			if(lastMissMove.col - lastHitMove.col > 0){
+				return new Move(lastHitMove.row+1, lastHitMove.col);
+			}
+		}
+		if(lastHitMove.col - lastMissMove.col == 0){
+			//same column
+			if(lastMissMove.row - lastHitMove.row > 0){
+				return new Move(lastHitMove.row, lastHitMove.col-1);
+			}
+			if(lastMissMove.row - lastHitMove.row < 0){
+				return new Move(lastHitMove.row, lastHitMove.col+1);
+			}
+		}
 		return null;
 	}
 
